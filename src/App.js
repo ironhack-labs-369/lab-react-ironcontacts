@@ -4,44 +4,50 @@ import './App.css';
 import contacts from './contacts.json';
 
 function App() {
-    const [contactList, setContactlist] = useState(contacts.slice(0, 5));
-
-    const displayContacts = contactList.map((contact) => {
-        return (
-            <>
-                <tr key={contact.id}>
-                    <td>
-                        <img
-                            src={contact.pictureUrl}
-                            alt="contact-pic"
-                            id="contactPic"
-                        />
-                    </td>
-                    <td>{contact.name}</td>
-                    <td>{contact.popularity.toFixed(2)}</td>
-                </tr>
-            </>
-        );
-    });
+    const [contactList, setContactList] = useState(contacts.slice(0, 5));
 
     const addContact = () => {
         let random =
             contacts[Math.floor(Math.random() * (contacts.length - 4) + 5)];
-        setContactlist([...contactList, random]);
+        setContactList(() => [...contactList, random]);
     };
     const sortByName = () => {
-        let sortedId = contactList.sort((a, b) => a.name - b.name);
-        console.log('sortedId', sortedId);
-        setContactlist([...sortedId]);
+        let sortedId = contactList.sort((a, b) => a.name.localeCompare(b.name));
+        setContactList(() => [...sortedId]);
     };
 
     const sortByPopularity = () => {
         let sortedPopularity = contactList.sort(
             (a, b) => b.popularity - a.popularity
         );
-        console.log('sortedPop', sortedPopularity);
-        setContactlist([...sortedPopularity]);
+        setContactList(() => [...sortedPopularity]);
     };
+
+    const deleteContact = (index) => {
+        let updatedList = contactList.filter(
+            (contact) => contact.id !== contactList[index].id
+        );
+        setContactList(() => [...updatedList]);
+    };
+
+    const displayContacts = contactList.map((contact, index) => {
+        return (
+            <tr key={contact.id}>
+                <td>
+                    <img
+                        src={contact.pictureUrl}
+                        alt="contact-pic"
+                        id="contactPic"
+                    />
+                </td>
+                <td>{contact.name}</td>
+                <td>{contact.popularity.toFixed(2)}</td>
+                <td>
+                    <button onClick={() => deleteContact(index)}>Delete</button>
+                </td>
+            </tr>
+        );
+    });
 
     return (
         <div className="App">
