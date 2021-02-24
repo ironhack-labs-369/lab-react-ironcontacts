@@ -1,7 +1,8 @@
 .App {
     text-align: center;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 
 .App-logo {
@@ -39,7 +40,12 @@
     }
 }
 
+.App table {
+    width: 70vw;
+    margin-top: 5%;
+}
 #contactPic {
     width: 5rem;
     height: 6rem;
+    margin: 1rem 0 1rem 0;
 }
