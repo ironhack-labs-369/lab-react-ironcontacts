@@ -1,9 +1,12 @@
+import { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import contacts from './contacts.json';
 
 function App() {
-    const displayContacts = contacts.slice(0, 5).map((contact) => {
+    const [contactList, setContactlist] = useState(contacts.slice(0, 5));
+
+    const displayContacts = contactList.map((contact) => {
         return (
             <>
                 <tr key={contact.id}>
@@ -20,11 +23,14 @@ function App() {
             </>
         );
     });
-    const randomContact = () => {
+
+    const addContact = () => {
         let random =
-            contacts[Math.floor(Math.random() * (5 - contacts.length) + 5)];
+            contacts[Math.floor(Math.random() * (contacts.length - 4) + 5)];
         console.log('random', random);
+        setContactlist([...contactList, random]);
     };
+
     return (
         <div className="App">
             <table>
@@ -37,7 +43,7 @@ function App() {
                 </thead>
                 <tbody>{displayContacts}</tbody>
             </table>
-            <button onClick={randomContact}>Add random contact</button>
+            <button onClick={addContact}>Add random contact</button>
         </div>
     );
 }
