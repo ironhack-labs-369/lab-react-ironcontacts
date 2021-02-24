@@ -27,12 +27,35 @@ function App() {
     const addContact = () => {
         let random =
             contacts[Math.floor(Math.random() * (contacts.length - 4) + 5)];
-        console.log('random', random);
         setContactlist([...contactList, random]);
+    };
+    const sortByName = () => {
+        let sortedId = contactList.sort((a, b) => a.name - b.name);
+        console.log('sortedId', sortedId);
+        setContactlist([...sortedId]);
+    };
+
+    const sortByPopularity = () => {
+        let sortedPopularity = contactList.sort(
+            (a, b) => b.popularity - a.popularity
+        );
+        console.log('sortedPop', sortedPopularity);
+        setContactlist([...sortedPopularity]);
     };
 
     return (
         <div className="App">
+            <div style={{ display: 'flex' }}>
+                <button onClick={addContact} className="buttons">
+                    Add random contact
+                </button>
+                <button onClick={sortByName} className="buttons">
+                    Sort by name
+                </button>
+                <button onClick={sortByPopularity} className="buttons">
+                    Sort by popularity
+                </button>
+            </div>
             <table>
                 <thead>
                     <tr>
@@ -43,7 +66,6 @@ function App() {
                 </thead>
                 <tbody>{displayContacts}</tbody>
             </table>
-            <button onClick={addContact}>Add random contact</button>
         </div>
     );
 }
